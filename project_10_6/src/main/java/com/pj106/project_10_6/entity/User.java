@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 import javax.persistence.*;
 
+import static com.pj106.project_10_6.entity.UserRoleEnum.USER;
+
 @Entity
 @Getter
 @Setter
@@ -30,7 +32,23 @@ public class User extends Timestamped {
     private String nickname;
 
     @Column
-    private String profile;
+    private String profile = "";
 
+    @Column(nullable = false)
+    @Enumerated(value = EnumType.STRING)
+    private UserRoleEnum role = USER;
 
+    @Column(nullable = false)
+    private boolean userStatus;
+
+    public User(String loginId, String password, String email, String nickname, String profile) {
+        this.loginId = loginId;
+        this.password = password;
+        this.email = email;
+        this.nickname = nickname;
+        this.profile = profile;
+        this.role = role;
+        getCreatedAt();
+        getModifiedAt();
+    }
 }
