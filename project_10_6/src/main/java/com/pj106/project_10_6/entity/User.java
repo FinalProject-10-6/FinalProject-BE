@@ -7,11 +7,10 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 import javax.persistence.*;
 
-@Entity
+@Entity(name = "Users")
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "Users")
 public class User extends Timestamped {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,5 +31,14 @@ public class User extends Timestamped {
     @Column
     private String profile;
 
+    @Column(nullable = false)
+    @Enumerated(value = EnumType.STRING)
+    private UserRoleEnum role;
 
+    public User(String loginId, String nickname, String password) {
+        this.loginId = loginId;
+        this.nickname = nickname;
+        this.password = password;
+        this.role = UserRoleEnum.USER;
+    }
 }
