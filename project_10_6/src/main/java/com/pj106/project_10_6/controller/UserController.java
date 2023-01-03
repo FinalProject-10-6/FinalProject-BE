@@ -2,6 +2,7 @@ package com.pj106.project_10_6.controller;
 
 import com.pj106.project_10_6.dto.SecurityExceptionDto;
 import com.pj106.project_10_6.dto.SignupRequestDto;
+import com.pj106.project_10_6.handler.GlobalExceptionHandler;
 import com.pj106.project_10_6.repository.UserRepository;
 import com.pj106.project_10_6.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +22,7 @@ public class UserController {
 
 
     @PostMapping("/signup")
-    public SecurityExceptionDto signup(@Valid @RequestBody SignupRequestDto requestDto) {
+    public GlobalExceptionHandler signup(@Valid @RequestBody SignupRequestDto requestDto) {
         return userService.signup(requestDto);
     }
 }

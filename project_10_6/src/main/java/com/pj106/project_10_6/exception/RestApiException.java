@@ -1,4 +1,12 @@
 package com.pj106.project_10_6.exception;
 
-public class RestApiException extends RuntimeException{
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.http.HttpStatus;
+
+@Getter
+@Setter
+public class RestApiException {
+    private String errorMessage;
+    private HttpStatus httpStatus;
 }
