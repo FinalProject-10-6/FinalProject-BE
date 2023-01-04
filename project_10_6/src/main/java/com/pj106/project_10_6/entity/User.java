@@ -30,7 +30,7 @@ public class User extends Timestamped {
     private String nickname;
 
     @Column(nullable = true)
-    private String profile = "";
+    private String profile = "/*기본프로필url*/";
 
     @Column(nullable = false)
     @Enumerated(value = EnumType.STRING)
