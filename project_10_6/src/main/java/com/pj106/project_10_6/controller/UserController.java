@@ -7,10 +7,7 @@ import com.pj106.project_10_6.dto.SignupRequestDto;
 import com.pj106.project_10_6.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -31,5 +28,10 @@ public class UserController {
     @PostMapping("/user/login")
     public LoginResponseDto login(@RequestBody LoginRequestDto loginRequestDto, HttpServletResponse response){
         return userService.login(loginRequestDto, response);
+    }
+
+    @PostMapping("/user/{loginId}")
+    public MsgResponseDto idCheck(@PathVariable String loginId){
+        return userService.idCheck(loginId);
     }
 }

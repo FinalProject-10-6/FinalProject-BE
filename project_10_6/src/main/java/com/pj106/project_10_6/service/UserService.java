@@ -76,5 +76,18 @@ public class UserService {
         return new LoginResponseDto("회원가입 완료", HttpStatus.OK.value(), user.getProfile(), user.getNickname());
 
     }
+
+    @Transactional
+    public MsgResponseDto idCheck(String loginId) {
+
+        Optional<User> foundId = userRepository.findByLoginId(loginId);
+        if (foundId.isPresent()) { //존재하는 것을 찾았다면 에러처리
+            throw new IllegalArgumentException("이미 존재하는 ID 입니다.");
+        } else {
+            return new MsgResponseDto("사용할 수 있는 ID 입니다.", HttpStatus.OK.value());
+        }
+
+
+    }
 }
 
