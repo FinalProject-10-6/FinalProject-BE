@@ -14,5 +14,6 @@ public class GlobalExceptionHandler {
         this.msg = msg;
         this.statusCode = statusCode;
     }
+
 }
 
