@@ -13,6 +13,7 @@ import javax.persistence.*;
 @Setter       //추가하신이유가???
 @NoArgsConstructor
 @Table(name = "Users")
+@NoArgsConstructor
 public class User extends Timestamped {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,8 +31,8 @@ public class User extends Timestamped {
     @Column(nullable = false, unique = true)
     private String nickname;
 
-    @Column
-    private String profile;
+    @Column(nullable = true)
+    private String profile = "/*기본프로필url*/";
 
     @Enumerated(EnumType.STRING)
     @Column
@@ -47,4 +48,14 @@ public class User extends Timestamped {
         this.userRole = UserRole.USER;
     }
 
+    @Column(nullable = false)
+    private boolean userStatus;
+
+    public User(String loginId, String nickname, String password, String email) {
+        this.loginId = loginId;
+        this.nickname = nickname;
+        this.password = password;
+        this.email = email;
+        this.role = UserRoleEnum.USER;
+    }
 }
