@@ -1,5 +1,6 @@
 package com.pj106.project_10_6.entity;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,7 +10,7 @@ import javax.persistence.*;
 
 @Entity
 @Getter
-@Setter
+@Setter       //추가하신이유가???
 @NoArgsConstructor
 @Table(name = "Users")
 public class User extends Timestamped {
@@ -32,5 +33,18 @@ public class User extends Timestamped {
     @Column
     private String profile;
 
+    @Enumerated(EnumType.STRING)
+    @Column
+    private UserRole userRole;
+
+    @Builder
+    public User(String loginId, String password, String email, String nickname, String profile) {
+        this.loginId = loginId;
+        this.password = password;
+        this.email = email;
+        this.nickname = nickname;
+        this.profile = profile;
+        this.userRole = UserRole.USER;
+    }
 
 }

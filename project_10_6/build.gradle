@@ -6,7 +6,7 @@ plugins {
 
 group = 'com.PJ10-6'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '11'
+sourceCompatibility = '17'
 
 configurations {
     compileOnly {
@@ -19,19 +19,41 @@ repositories {
 }
 
 dependencies {
+    // JPA
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    // 스프링 시큐리티
     implementation 'org.springframework.boot:spring-boot-starter-security'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'mysql:mysql-connector-java' //데이터베이스 연결 커넥터
-    compileOnly 'org.projectlombok:lombok'
-    developmentOnly 'org.springframework.boot:spring-boot-devtools'
-    runtimeOnly 'com.mysql:mysql-connector-j'
-    annotationProcessor 'org.projectlombok:lombok'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
 
-    // Jasypt
+    // spring web
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    //데이터베이스 연결 커넥터   2개의 차이점은뭘까?
+    implementation 'mysql:mysql-connector-java'
+    runtimeOnly 'com.mysql:mysql-connector-j'
+
+    // lombok  - 클래스에 Getter, Setter, 생성자 등을 자동으로 만들어 주는 도구
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    // spring devtools  - 서버 재시작 없이도 클래스 변경시 서버가 자동으로 재기동
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+    // Jasypt  -ENC 암호화를 위해
     implementation 'com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.4'
+
+    // 요건 뭘까?
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    // Validation 사용을 위해 의존성 추가
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation'
+
+    // JWT 관련
+    compileOnly group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.2'
+    runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.11.2'
+    runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.2'
 }
 
 tasks.named('test') {
