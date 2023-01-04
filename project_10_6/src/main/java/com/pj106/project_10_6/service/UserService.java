@@ -1,5 +1,7 @@
 package com.pj106.project_10_6.service;
 
+import com.pj106.project_10_6.dto.LoginRequestDto;
+import com.pj106.project_10_6.dto.LoginResponseDto;
 import com.pj106.project_10_6.dto.MsgResponseDto;
 import com.pj106.project_10_6.dto.SignupRequestDto;
 import com.pj106.project_10_6.jwt.JwtUtil;
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.pj106.project_10_6.entity.User;
 
+import javax.servlet.http.HttpServletResponse;
 import java.util.Optional;
 
 @Service
@@ -52,5 +55,26 @@ public class UserService {
         return new MsgResponseDto("회원가입 완료", HttpStatus.OK.value());
 
     }
+
+    @Transactional(readOnly = true)
+    public LoginResponseDto login(LoginRequestDto loginRequestDto, HttpServletResponse response) {
+        String loginId = loginRequestDto.getLoginId();
+        String password = loginRequestDto.getPassword();
+
+        //사용자 확인
+        User user = userRepository.findByLoginId(loginId).orElseThrow(
+                () -> new IllegalArgumentException("아이디를 찾을 수 없습니다.")
+        );
+
+        //비밀번호 확인
+        if(!passwordEncoder.matches(password, user.getPassword())){
+            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+        }
+
+        response.addHeader(JwtUtil.AUTHORIZATION_HEADER, jwtUtil.createToken(user.getLoginId()));
+
+        return new LoginResponseDto("회원가입 완료", HttpStatus.OK.value(), user.getProfile(), user.getNickname());
+
     }
+}
 

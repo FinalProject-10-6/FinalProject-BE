@@ -1,5 +1,7 @@
 package com.pj106.project_10_6.controller;
 
+import com.pj106.project_10_6.dto.LoginRequestDto;
+import com.pj106.project_10_6.dto.LoginResponseDto;
 import com.pj106.project_10_6.dto.MsgResponseDto;
 import com.pj106.project_10_6.dto.SignupRequestDto;
 import com.pj106.project_10_6.service.UserService;
@@ -9,6 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpServletResponse;
 
 @RestController
 @RequestMapping("/api")
@@ -21,5 +25,10 @@ public class UserController {
     @PostMapping("/user/signup")
     public MsgResponseDto signup(@RequestBody SignupRequestDto signupRequestDto){
         return userService.signup(signupRequestDto);
+    }
+
+    @PostMapping("/user/login")
+    public LoginResponseDto login(@RequestBody LoginRequestDto loginRequestDto, HttpServletResponse response){
+        return userService.login(loginRequestDto, response);
     }
 }
